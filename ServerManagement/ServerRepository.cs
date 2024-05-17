@@ -4,8 +4,8 @@ namespace ServerManagement
 {
     public class ServersRepository : IServersRepository
     {
-        private List<Server> servers = new List<Server>()
-        {
+        private List<Server> servers =
+        [
             new Server {  ServerId = 1, Name = "Server1", City = "Toronto" },
             new Server {  ServerId = 2, Name = "Server2", City = "Toronto" },
             new Server {  ServerId = 3, Name = "Server3", City = "Toronto" },
@@ -21,7 +21,7 @@ namespace ServerManagement
             new Server {  ServerId = 13, Name = "Server13", City = "Halifax" },
             new Server {  ServerId = 14, Name = "Server14", City = "Halifax" },
             new Server {  ServerId = 15, Name = "Server15", City = "Halifax" },
-        };
+        ];
 
         public void AddServer(Server server)
         {
