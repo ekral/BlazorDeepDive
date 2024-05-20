@@ -1,17 +1,27 @@
 ﻿@page "/servers/{id:int}"
 
+@inject NavigationManager NavigationManager
+
 <h3>Edit Server</h3>
 <br />
 <br />
 @if (Server is not null)
 {
-    <EditForm FormName="formEditServer" Enhance Model="Server" OnSubmit="Submit">
+    <EditForm FormName="formEditServer" Enhance Model="Server" OnValidSubmit="Submit">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+
+        <InputNumber @bind-Value="Server.ServerId" hidden ></InputNumber>
+
         <div class="row mb-3">
             <div class="col-2">
                 <label class="col-form-label">Name</label>
             </div>
             <div class="col-6">
                 <InputText @bind-Value="Server.Name" class="form-control"></InputText>    
+            </div>
+            <div class="col">
+                <ValidationMessage For="() => Server.Name"/>
             </div>
         </div>
 
@@ -21,6 +31,9 @@
             </div>
             <div class="col-6">
                 <InputText @bind-Value="Server.City" class="form-control"></InputText>
+            </div>
+            <div class="col">
+                <ValidationMessage For="() => Server.City" />
             </div>
         </div>
 
@@ -33,7 +46,7 @@
             </div>
         </div>
         <br/>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary" type="submit">Update</button>
         &nbsp;
         <a href="/servers" class="btn btn-primary">Close</a>
     </EditForm>
@@ -45,18 +58,23 @@
     public int Id { get; set; }
 
     [Inject]
-    private IServersRepository serversRepository { get; set; } = null!;
+    private IServersRepository ServersRepository { get; set; } = null!;
 
     [SupplyParameterFromForm] 
     Server? Server { get; set; }
 
     protected override void OnParametersSet()
     {
-        Server = serversRepository.GetServerById(Id);
+        Server ??= ServersRepository.GetServerById(Id);
     }
 
     void Submit()
     {
-        
+        if (Server is not null)
+        {
+            ServersRepository.UpdateServer(Server.ServerId, Server);
+
+            NavigationManager.NavigateTo("/servers");
+        }
     }
 }
