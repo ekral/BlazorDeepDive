@@ -3,25 +3,42 @@
 <h3>Edit Server</h3>
 <br />
 <br />
-@if (server is not null)
+@if (Server is not null)
 {
-    <p>
-        @server.Name
-    </p>
+    <EditForm FormName="formEditServer" Enhance Model="Server" OnSubmit="Submit">
+        <div class="row mb-3">
+            <div class="col-2">
+                <label class="col-form-label">Name</label>
+            </div>
+            <div class="col-6">
+                <InputText @bind-Value="Server.Name" class="form-control"></InputText>    
+            </div>
+        </div>
 
-    <p>
-        @server.City
-    </p>
+        <div class="row mb-3">
+            <div class="col-2">
+                <label class="col-form-label">City</label>
+            </div>
+            <div class="col-6">
+                <InputText @bind-Value="Server.City" class="form-control"></InputText>
+            </div>
+        </div>
 
-    <p>
-        @server.IsOnline
-    </p>
-
+        <div class="row mb-3">
+            <div class="col-2">
+                <label class="col-form-label">Online</label>
+            </div>
+            <div class="col-6">
+                <InputCheckbox @bind-Value="Server.IsOnline" class="form-check-input"></InputCheckbox>
+            </div>
+        </div>
+        <br/>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        &nbsp;
+        <a href="/servers" class="btn btn-primary">Close</a>
+    </EditForm>
 }
 
-<br/>
-
-<a href="/servers" class="btn btn-primary">Close</a>
 
 @code {
     [Parameter]
@@ -30,10 +47,16 @@
     [Inject]
     private IServersRepository serversRepository { get; set; } = null!;
 
-    Server? server;
+    [SupplyParameterFromForm] 
+    Server? Server { get; set; }
 
     protected override void OnParametersSet()
     {
-        server = serversRepository.GetServerById(Id);
+        Server = serversRepository.GetServerById(Id);
+    }
+
+    void Submit()
+    {
+        
     }
 }
