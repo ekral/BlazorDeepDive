@@ -33,10 +33,10 @@
 
 @code {
     [Inject]
-    private IServersRepository serversRepository { get; set; }
+    private IServersRepository serversRepository { get; set; } = null!;
 
     [Inject]
-    private ICitiesRepository citiesRepository { get; set; }
+    private ICitiesRepository citiesRepository { get; set; } = null!;
 
     private List<Server> servers = new();
     private List<string> cities = new();
