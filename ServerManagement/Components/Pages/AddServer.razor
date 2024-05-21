@@ -1,7 +1,5 @@
 ﻿@page "/servers/add"
 
-<h3>AddServer</h3>
-
 @inject NavigationManager NavigationManager
 @inject IServersRepository ServersRepository
 
@@ -10,7 +8,7 @@
 <br />
 @if (Server is not null)
 {
-    <EditForm FormName="formEditServer" Enhance Model="Server" OnValidSubmit="Submit">
+    <EditForm FormName="formAddServer" Enhance Model="Server" OnValidSubmit="Submit">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
@@ -47,7 +45,7 @@
             </div>
         </div>
         <br />
-        <button class="btn btn-primary" type="submit">Add server</button>
+        <button class="btn btn-primary" type="submit">Save</button>
         &nbsp;
         <a href="/servers" class="btn btn-primary">Close</a>
     </EditForm>
