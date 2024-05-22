@@ -3,9 +3,33 @@
 <h3>HypotecniKalkulacka</h3>
 
 <EditForm Model="Kalkulacka" OnValidSubmit="SpocitejSplatku" step="1000" FormName="FormHypotecniKalkulacka" >
-    <InputNumber @bind-Value="Kalkulacka.Dluh" class="form-control"/>
-    <InputNumber @bind-Value="Kalkulacka.RocniUrokovaMira" class="form-control"/>
-    <InputNumber @bind-Value="Kalkulacka.PocetLet" class="form-control"/>
+    
+    <div class="row mb-3">
+        <div class="col-2">
+            <label>Výše úvěru (Kč)</label>
+        </div>
+        <div class="col-6">
+            <InputNumber @bind-Value="Kalkulacka.Dluh" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-2">
+            <label>Úroková sazba (%)</label>
+        </div>
+        <div class="col-6">
+            <InputNumber @bind-Value="Kalkulacka.RocniUrokovaMira" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-2">
+            <label>Doba splácení v letech</label>
+        </div>
+        <div class="col-6">
+            <InputNumber @bind-Value="Kalkulacka.PocetLet" class="form-control" />
+        </div>
+    </div>
 
     <button type="submit" class="btn btn-primary">Spocitej</button>
 </EditForm>
