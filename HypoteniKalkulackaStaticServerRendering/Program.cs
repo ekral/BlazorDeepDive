@@ -1,6 +1,6 @@
-using ServerManagement.Components;
+using HypoteniKalkulackaStaticServerRendering.Components;
 
-namespace ServerManagement
+namespace HypoteniKalkulackaStaticServerRendering
 {
     public class Program
     {
@@ -9,11 +9,7 @@ namespace ServerManagement
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddRazorComponents()
-                    .AddInteractiveServerComponents();
-
-            builder.Services.AddSingleton<IServersRepository, ServersRepository>();
-            builder.Services.AddSingleton<ICitiesRepository, CitiesRepository>();
+            builder.Services.AddRazorComponents();
 
             var app = builder.Build();
 
@@ -29,9 +25,8 @@ namespace ServerManagement
 
             app.UseStaticFiles();
             app.UseAntiforgery();
-           
-            app.MapRazorComponents<App>()
-                .AddInteractiveServerRenderMode();
+
+            app.MapRazorComponents<App>();
 
             app.Run();
         }

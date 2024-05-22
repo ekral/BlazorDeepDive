@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34902.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerManagement", "ServerManagement\ServerManagement.csproj", "{9CF1B2EE-FC3B-4F5F-9E9D-C6EC314E0334}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypoteniKalkulackaStaticServerRendering", "HypoteniKalkulackaStaticServerRendering\HypoteniKalkulackaStaticServerRendering.csproj", "{3F96751F-37D6-45DF-AB11-0D49D2676232}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9CF1B2EE-FC3B-4F5F-9E9D-C6EC314E0334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CF1B2EE-FC3B-4F5F-9E9D-C6EC314E0334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CF1B2EE-FC3B-4F5F-9E9D-C6EC314E0334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F96751F-37D6-45DF-AB11-0D49D2676232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F96751F-37D6-45DF-AB11-0D49D2676232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F96751F-37D6-45DF-AB11-0D49D2676232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F96751F-37D6-45DF-AB11-0D49D2676232}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

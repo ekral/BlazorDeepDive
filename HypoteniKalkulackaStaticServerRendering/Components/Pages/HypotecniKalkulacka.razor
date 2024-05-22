@@ -1,0 +1,24 @@
+﻿@page "/HypotecniKalkulacka"
+
+<h3>HypotecniKalkulacka</h3>
+
+<EditForm Model="Kalkulacka" OnValidSubmit="SpocitejSplatku" step="1000" FormName="FormHypotecniKalkulacka" >
+    <InputNumber @bind-Value="Kalkulacka.Dluh" class="form-control"/>
+    <InputNumber @bind-Value="Kalkulacka.RocniUrokovaMira" class="form-control"/>
+    <InputNumber @bind-Value="Kalkulacka.PocetLet" class="form-control"/>
+
+    <button type="submit" class="btn btn-primary">Spocitej</button>
+</EditForm>
+
+<p>@(Kalkulacka.MesicniSplatka.ToString("C"))</p>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private Kalkulacka Kalkulacka { get; set; } = new Kalkulacka() { Dluh = 10000000.0m, RocniUrokovaMira = 5.0m, PocetLet = 20 };
+
+    void SpocitejSplatku()
+    {
+        Kalkulacka.SpocitejSplatku();        
+    }
+}
