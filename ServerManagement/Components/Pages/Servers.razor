@@ -1,4 +1,5 @@
 ﻿@page "/servers"
+@rendermode InteractiveServer
 @inject IServersRepository ServersRepository
 @inject ICitiesRepository CitiesRepository
 @inject NavigationManager NavigationManager
@@ -8,13 +9,13 @@
 
 <div class="container-fluid text-center">
     <div class="row w-50">
-        @foreach (string city in cities)
+        @foreach (string cityName in cities)
         {
             <div class="col">
                 <div class="card">
-                    <img src=@($"/images/{city}.png") class="card-img-top" alt="Calgary"  >
+                    <img src=@($"/images/{cityName}.png") class="card-img-top" alt="Calgary"  >
                     <div class="card-body">
-                        <button type="button" class="btn btn-outline-primary"> @city</button>
+                        <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(cityName))"> @cityName</button>
                     </div>
                 </div>
             </div>
@@ -45,12 +46,15 @@
 </ul>
 
 <br/>
+@selectedCityName
+<br/>
 
 <a href="/servers/add" class="btn btn-primary">Add server</a>
 
 @code {
     private List<Server> servers = new();
     private List<string> cities = new();
+    private string selectedCityName = "Toronto";
 
     public Servers()
     {
@@ -69,5 +73,10 @@
         ServersRepository.DeleteServer(serverId);
 
         servers = ServersRepository.GetServersByCity("Toronto");
+    }
+
+    public void SelectCity(string cityName)
+    {
+        selectedCityName = cityName;
     }
 }
