@@ -22,21 +22,34 @@
                                 @bind-value="todo.IsCompleted"
                                 checked="@todo.IsCompleted" />
                         </div>
+                       
+                            <div class="col">
 
-                        <div class="col">
-                            <input 
-                                type="text"
-                                style="vertical-align: middle, width: 100px"
-                                class="form-control border-0"
-                                @bind-value="todo.Description"/>
-                        </div>
-                 
-                        <div class="col>">
                             @if (todo.IsCompleted)
                             {
-                                <text>Completed at @todo.CompletitionDate</text>
+                                <input type="text"
+                                       style="vertical-align: middle"
+                                       class="form-control border-0 text-decoration-line-through"
+                                       @bind-value="todo.Description"
+                                       disabled/>
                             }
-                        </div>
+                            else
+                            {
+                                <input type="text"
+                                       style="vertical-align: middle"
+                                       class="form-control border-0"
+                                       @bind-value="todo.Description" />
+                            }
+
+                            </div>
+                       
+                        
+                        @if (todo.IsCompleted)
+                        {
+                            <div class="col>">
+                                <text>Completed at @todo.CompletitionDate</text>
+                            </div>
+                        }
                     </div>
                     
                 </EditForm>
