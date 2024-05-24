@@ -17,11 +17,11 @@
             
                 if(IsCompleted)
                 {
-                    CompletitionDate = DateTime.Now;
+                    CompletionDate = DateTime.Now;
                 }
             } 
         }
-        public DateTime? CompletitionDate { get; private set; }
+        public DateTime? CompletionDate { get; private set; }
 
     }
 }

@@ -12,49 +12,40 @@
         @foreach (TodoTask todo in todos)
         {
             <li @key="todo.Id">
-                <EditForm Model="todo" FormName="@($"formTodo{todo.Id}")" >
-                    <div class="row mb-2">
-                        <div class="col-1" style="width: 30px">
-                            <input 
-                                type="checkbox"
-                                style="vertical-align: middle"
-                                class="form-check-input"
-                                @bind-value="todo.IsCompleted"
-                                checked="@todo.IsCompleted" />
-                        </div>
-                       
-                            <div class="col">
-
-                            @if (todo.IsCompleted)
-                            {
-                                <input type="text"
-                                       style="vertical-align: middle"
-                                       class="form-control border-0 text-decoration-line-through"
-                                       @bind-value="todo.Description"
-                                       disabled/>
-                            }
-                            else
-                            {
-                                <input type="text"
-                                       style="vertical-align: middle"
-                                       class="form-control border-0"
-                                       @bind-value="todo.Description" />
-                            }
-
-                            </div>
-                       
-                        
+                <div class="row mb-2">
+                    <div class="col-1" style="width:30px">
+                        <input type="checkbox"
+                               style="vertical-align:middle"
+                               class="form-check-input"
+                               @bind-value="todo.IsCompleted"
+                               checked="@todo.IsCompleted" />
+                    </div>
+                    <div class="col">
                         @if (todo.IsCompleted)
                         {
-                            <div class="col>">
-                                <text>Completed at @todo.CompletitionDate</text>
-                            </div>
+                            <input type="text"
+                                   style="vertical-align:middle"
+                                   class="form-control border-0 text-decoration-line-through"
+                                   @bind-value="todo.Description"
+                                   disabled />
+                        }
+                        else
+                        {
+                            <input type="text"
+                                   style="vertical-align:middle"
+                                   class="form-control border-0"
+                                   @bind-value="todo.Description" />
+                        }
+
+                    </div>
+                    <div class="col">
+                        @if (todo.IsCompleted)
+                        {
+                            <text>Completed at: @todo.CompletionDate</text>
                         }
                     </div>
-                    
-                </EditForm>
-            
-            </li>    
+                </div>
+            </li>
         }
     </ul>
 }
