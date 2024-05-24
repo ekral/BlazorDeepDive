@@ -30,8 +30,7 @@
 
             ArgumentNullException.ThrowIfNull(todo);
 
-            todo.Completed = true;
-            todo.CompletitionDate = DateTime.Now;
+            todo.IsCompleted = true;
         }
     }
 }

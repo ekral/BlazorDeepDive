@@ -8,21 +8,37 @@
 
 @if(todos.Count > 0)
 {
-    <ul>
+    <ul class="list-unstyled">
         @foreach (TodoTask todo in todos)
         {
             <li @key="todo.Id">
                 <EditForm Model="todo" FormName="@($"formTodo{todo.Id}")" >
-                    <InputCheckbox @bind-Value="todo.Completed" />
-                    &nbsp;
-                    @if(todo.Id == editableTodoId)
-                    {
-                        <InputText @bind-Value="todo.Description"/>
-                    }
-                    else
-                    {
-                        <label @ondblclick="() => EnableEdit(todo.Id)">@todo.Description</label>
-                    }
+                    <div class="row mb-2">
+                        <div class="col-1" style="width: 30px">
+                            <input 
+                                type="checkbox"
+                                style="vertical-align: middle"
+                                class="form-check-input"
+                                @bind-value="todo.IsCompleted"
+                                checked="@todo.IsCompleted" />
+                        </div>
+
+                        <div class="col">
+                            <input 
+                                type="text"
+                                style="vertical-align: middle, width: 100px"
+                                class="form-control border-0"
+                                @bind-value="todo.Description"/>
+                        </div>
+                 
+                        <div class="col>">
+                            @if (todo.IsCompleted)
+                            {
+                                <text>Completed at @todo.CompletitionDate</text>
+                            }
+                        </div>
+                    </div>
+                    
                 </EditForm>
             
             </li>    
@@ -31,16 +47,10 @@
 }
 @code {
     private List<TodoTask> todos = new();
-    private int editableTodoId = 0;
 
     protected override void OnInitialized()
     {
         todos = TodoRepository.GetTodos();
-    }
-
-    private void EnableEdit(int id)
-    {
-        editableTodoId = id;
     }
 
     private void AddTodo()
