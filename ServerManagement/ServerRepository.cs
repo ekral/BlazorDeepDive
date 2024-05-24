@@ -30,7 +30,7 @@ namespace ServerManagement
             servers.Add(server);
         }
 
-        public List<Server> GetServres() => servers;
+        public List<Server> GetServers() => servers;
 
         public List<Server> GetServersByCity(string cityName)
         {

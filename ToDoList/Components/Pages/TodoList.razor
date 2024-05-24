@@ -1,0 +1,52 @@
+﻿@page "/todo"
+@inject ITodoRepository TodoRepository
+@rendermode InteractiveServer
+
+<h3>TodoList</h3>
+
+<button class="btn btn-primary" @onclick="AddTodo">Add Todo</button>
+
+@if(todos.Count > 0)
+{
+    <ul>
+        @foreach (TodoTask todo in todos)
+        {
+            <li @key="todo.Id">
+                <EditForm Model="todo" FormName="@($"formTodo{todo.Id}")" >
+                    <InputCheckbox @bind-Value="todo.Completed" />
+                    &nbsp;
+                    @if(todo.Id == editableTodoId)
+                    {
+                        <InputText @bind-Value="todo.Description"/>
+                    }
+                    else
+                    {
+                        <label @ondblclick="() => EnableEdit(todo.Id)">@todo.Description</label>
+                    }
+                </EditForm>
+            
+            </li>    
+        }
+    </ul>
+}
+@code {
+    private List<TodoTask> todos = new();
+    private int editableTodoId = 0;
+
+    protected override void OnInitialized()
+    {
+        todos = TodoRepository.GetTodos();
+    }
+
+    private void EnableEdit(int id)
+    {
+        editableTodoId = id;
+    }
+
+    private void AddTodo()
+    {
+        TodoTask todo = new TodoTask() { Description = "New task" };
+        TodoRepository.AddTodo(todo);
+        todos = TodoRepository.GetTodos();
+    }
+}
