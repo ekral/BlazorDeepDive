@@ -23,7 +23,7 @@
 
     protected override void OnParametersSet()
     {
-        if(!string.IsNullOrEmpty(CityName))
+        if(!string.IsNullOrWhiteSpace(CityName))
         {
             servers = ServersRepository.GetServersByCity(CityName ?? "Toronto");
         }
