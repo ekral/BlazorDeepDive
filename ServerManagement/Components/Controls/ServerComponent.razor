@@ -9,6 +9,22 @@
         &nbsp;
         <a href="/servers/@Server.ServerId" class="btn btn-link">Edit</a>
         &nbsp;
+        @if (Server.IsOnline)
+        {
+            <button
+                class="btn btn-outline-danger"
+                @onclick="@(() => Server.IsOnline = false)">
+                    Turn Off
+                </button>
+        }
+        else
+        {
+            <button class="btn btn-outline-success"
+                    @onclick="@(() => Server.IsOnline = true)">
+                Turn On
+            </button>
+        }
+        &nbsp;
         <EditForm Model="Server"
                   FormName="@($"form-server-{Server.ServerId}")"
                   OnValidSubmit="@(() => DeleteServer(Server.ServerId))">
