@@ -1,0 +1,41 @@
+﻿@inject ICitiesRepository CitiesRepository
+
+@if (cities is not null && cities.Count > 0)
+{
+    <div class="container-fluid text-center">
+        <div class="row w-50">
+            @foreach (string cityName in cities)
+            {
+                <div class="col">
+                    <div class="card @(cityName.Equals(selectedCityName, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
+                        <img src=@($"/images/{cityName}.png") class="card-img-top" alt="Calgary">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(cityName))"> @cityName</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private List<string>? cities;
+    private string selectedCityName = "Toronto";
+
+    public CityListComponent()
+    {
+
+    }
+    private void SelectCity(string cityName)
+    {
+        selectedCityName = cityName;
+
+        // servers = ServersRepository.GetServersByCity(selectedCityName);
+    }
+
+    protected override void OnInitialized()
+    {
+        cities = CitiesRepository.GetCities();
+    }
+}
