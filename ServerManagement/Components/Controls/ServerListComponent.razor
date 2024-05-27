@@ -1,0 +1,22 @@
+﻿@inject IServersRepository ServersRepository
+
+@if(servers is not null && servers.Count > 0)
+{
+    <ul>
+        <Virtualize Items="servers" Context="server">
+            <ServerComponent Server="server"/>
+        </Virtualize>
+
+    </ul>
+}
+@code {
+    [Parameter]
+    public string? CityName { get; set; }
+
+    private List<Server> servers = new();
+
+    protected override void OnParametersSet()
+    {
+        servers = ServersRepository.GetServersByCity(CityName ?? "Toronto");
+    }
+}

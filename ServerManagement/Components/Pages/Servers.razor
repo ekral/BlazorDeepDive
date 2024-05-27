@@ -24,35 +24,16 @@
 </div>
 
 <br/>
-<ServerComponent @rendermode="InteractiveServer" />
-<br/>
 
-<br />
 <div class="input-group mb-3">
     <input type="text" class="form-control" placeholder="Search servers" @bind-value:event="oninput" @bind-value="ServerFilter" />
     <button class="btn btn-outline-secondary" type="button" id="buttonSearch" @onclick="HandleSearch">Search</button>
 </div>
 <br />
 
-<ul>
-    @foreach (Server server in servers)
-    {
-        <Virtualize Items="servers" Context="server" >
-            <li @key="server.ServerId">
-                @server.Name in @server.City is <span style="color: @(server.IsOnline ? "green" : "red")">@(server.IsOnline ? "online" : "offline")</span>
-                &nbsp;
-                <a href="/servers/@server.ServerId" class="btn btn-link">Edit</a>
-                &nbsp;
-                <EditForm 
-                    Model="server"  
-                    FormName="@($"form-server-{server.ServerId}")" 
-                    OnValidSubmit="@(() => DeleteServer(server.ServerId))">
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </EditForm>
-            </li>
-        </Virtualize>
-    }
-</ul>
+<ServerListComponent 
+    @rendermode="InteractiveServer" 
+    CityName="@selectedCityName" />
 
 <br/>
 @ServerFilter
@@ -60,7 +41,6 @@
 <a href="/servers/add" class="btn btn-primary">Add server</a>
 
 @code {
-    private List<Server> servers = new();
     private List<string> cities = new();
     private string selectedCityName = "Toronto";
 
@@ -73,7 +53,7 @@
         {
             _serverFilter = value;
 
-            servers = ServersRepository.SearchServers(_serverFilter);
+            // servers = ServersRepository.SearchServers(_serverFilter);
 
             selectedCityName = string.Empty;
         }
@@ -81,37 +61,29 @@
 
     protected override void OnInitialized()
     {
-        servers = ServersRepository.GetServersByCity("Toronto");
         cities = CitiesRepository.GetCities();
     }
 
-    private void DeleteServer(int serverId)
-    {
-        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(serverId, 0);
-
-        ServersRepository.DeleteServer(serverId);
-
-        servers = ServersRepository.GetServersByCity("Toronto");
-    }
+   
 
     private void SelectCity(string cityName)
     {
         selectedCityName = cityName;
 
-        servers = ServersRepository.GetServersByCity(selectedCityName);
+        // servers = ServersRepository.GetServersByCity(selectedCityName);
 
         if(cityName == "Halifax")
         {
             for (int i = 16; i < 1000; i++)
             {
-                servers.Add(new Server() { ServerId = i, City = $"cityz{i}", Name = $"name{i}" });
+                // servers.Add(new Server() { ServerId = i, City = $"cityz{i}", Name = $"name{i}" });
             }
         }
     }
 
     private void HandleSearch()
     {
-        servers = ServersRepository.SearchServers(ServerFilter);
+        // servers = ServersRepository.SearchServers(ServerFilter);
         selectedCityName = string.Empty;
     }
 }
