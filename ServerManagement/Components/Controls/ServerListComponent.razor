@@ -1,14 +1,32 @@
 ﻿@inject IServersRepository ServersRepository
 
-@if(servers is not null && servers.Count > 0)
-{
-    <ul class="list-unstyled">
-        <Virtualize Items="servers" Context="server">
-            <ServerComponent Server="server"/>
-        </Virtualize>
-
-    </ul>
-}
+<table class="table table-striped">
+    <RepeaterComponent Items="servers">
+        <Header>
+            <thead>
+                <tr>
+                    <th>
+                        name
+                    </th>
+                    <th>
+                        City
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        People Online
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+        </Header>
+        <Row Context="server">
+            <ServerComponent Server="server" />
+        </Row>
+    </RepeaterComponent>
+</table>
 @code {
     [Parameter]
     public string? CityName { get; set; }

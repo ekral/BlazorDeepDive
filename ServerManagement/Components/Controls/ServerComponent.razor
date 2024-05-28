@@ -4,39 +4,45 @@
 @if(Server is not null)
 {
 
-    <li @key="Server.ServerId">
-        @Server.Name in @Server.City is <span style="color: @(Server.IsOnline ? "green" : "red")">@(Server.IsOnline ? "online" : "offline")</span>
-        &nbsp;
-        <a href="/servers/@Server.ServerId" class="btn btn-link">Edit</a>
-        &nbsp;
-        @if (Server.IsOnline)
-        {
-            <button
-                class="btn btn-outline-danger"
-                @onclick="@(() => Server.IsOnline = false)">
-                    Turn Off
+    <tr @key="Server.ServerId">
+        <td>
+            @Server.Name in @Server.City is <span style="color: @(Server.IsOnline ? "green" : "red")">@(Server.IsOnline ? "online" : "offline")</span>
+        </td>
+        <td>
+            <a href="/servers/@Server.ServerId" class="btn btn-link">Edit</a>
+        </td>
+        <td>
+            @if (Server.IsOnline)
+            {
+                <button
+                    class="btn btn-outline-danger"
+                    @onclick="@(() => Server.IsOnline = false)">
+                        Turn Off
+                    </button>
+            }
+            else
+            {
+                <button class="btn btn-outline-success"
+                        @onclick="@(() => Server.IsOnline = true)">
+                    Turn On
                 </button>
-        }
-        else
-        {
-            <button class="btn btn-outline-success"
-                    @onclick="@(() => Server.IsOnline = true)">
-                Turn On
-            </button>
-        }
-        &nbsp;
-        @if(Server.IsOnline)
-        {
-            <text>@Server.NumberOfPeople</text>
-        }
-        &nbsp;
-        <EditForm Model="Server"
-                  FormName="@($"form-server-{Server.ServerId}")"
-                  OnValidSubmit="@(() => DeleteServer(Server.ServerId))">
-            <button type="submit" class="btn btn-primary">Delete</button>
-        </EditForm>
-    </li>
+            }
+        </td>
 
+        <td>
+            @if(Server.IsOnline)
+            {
+                <text>@Server.NumberOfPeople</text>
+            }
+        </td>
+        <td>
+            <EditForm Model="Server"
+                      FormName="@($"form-server-{Server.ServerId}")"
+                      OnValidSubmit="@(() => DeleteServer(Server.ServerId))">
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </EditForm>
+        </td>
+    </tr>
 }
 
 @code {

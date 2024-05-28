@@ -1,0 +1,80 @@
+﻿@page "/quickgrid"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject IServersRepository ServersRepository
+
+<h3>QuickGrid Demo</h3>
+
+@if (servers is not null)
+{
+    <QuickGrid Items="servers.AsQueryable()">
+        <PropertyColumn Sortable="true" Property="s => s.Name"/>
+        <PropertyColumn Sortable="true" Property="s => s.City" />
+        <TemplateColumn Title="Status" SortBy="GridSort<Server>.ByAscending(s => s.IsOnline)">
+             @if(context.IsOnline)
+            {
+                <div style="color: green">
+                    Online
+                </div>   
+            } else
+            {
+                <div style="color: red">
+                    Offline
+                </div>
+            }
+        </TemplateColumn>
+        <TemplateColumn Title="Number of People" SortBy="GridSort<Server>.ByAscending(s => s.IsOnline ? s.NumberOfPeople : 0)">
+            @if (context.IsOnline)
+            {
+                <text>@context.NumberOfPeople</text>
+            }
+        </TemplateColumn>
+        <TemplateColumn Title="Switch">
+            @if (context.IsOnline)
+            {
+                <button class="btn btn-outline-danger"
+                        @onclick="@(() => context.IsOnline = false)">
+                    Turn Off
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-outline-success"
+                        @onclick="@(() => context.IsOnline = true)">
+                    Turn On
+                </button>
+            }
+        </TemplateColumn>
+        <TemplateColumn Title="Edit">
+            <a href="/servers/@context.ServerId" class="btn btn-link">Edit</a>
+        </TemplateColumn>
+        <TemplateColumn Title="Delete">
+            <ChildContent Context="server">
+                <EditForm Model="server"
+                          FormName="@($"form-server-{server.ServerId}")"
+                          OnValidSubmit="@(() => DeleteServer(server.ServerId))">
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </EditForm>
+            </ChildContent>
+        </TemplateColumn>
+    </QuickGrid>
+        
+}
+
+@code {
+    private List<Server>? servers;
+
+    private void DeleteServer(int serverId)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(serverId, 0);
+
+        ServersRepository.DeleteServer(serverId);
+
+        servers = ServersRepository.GetServers();
+    }
+
+    protected override void OnInitialized()
+    {
+        servers = ServersRepository.GetServers();
+    }
+}
