@@ -7,7 +7,7 @@
 
 @if (servers is not null)
 {
-    <QuickGrid Items="servers.AsQueryable()">
+    <QuickGrid Items="servers.AsQueryable()" Pagination="paginationState">
         <PropertyColumn Sortable="true" Property="s => s.Name"/>
         <PropertyColumn Sortable="true" Property="s => s.City" />
         <TemplateColumn Title="Status" SortBy="GridSort<Server>.ByAscending(s => s.IsOnline)">
@@ -58,11 +58,14 @@
             </ChildContent>
         </TemplateColumn>
     </QuickGrid>
-        
+    
+    <Paginator State="paginationState"/>
 }
 
 @code {
     private List<Server>? servers;
+
+    private PaginationState paginationState = new PaginationState() { ItemsPerPage = 5 };
 
     private void DeleteServer(int serverId)
     {
