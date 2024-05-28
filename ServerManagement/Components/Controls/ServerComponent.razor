@@ -25,6 +25,11 @@
             </button>
         }
         &nbsp;
+        @if(Server.IsOnline)
+        {
+            <text>@Server.NumberOfPeople</text>
+        }
+        &nbsp;
         <EditForm Model="Server"
                   FormName="@($"form-server-{Server.ServerId}")"
                   OnValidSubmit="@(() => DeleteServer(Server.ServerId))">
