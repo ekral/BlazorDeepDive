@@ -1,0 +1,41 @@
+﻿@if (TodoItem is not null)
+{
+    <div class="row mb-2">
+        <div class="col-1" style="width:30px">
+            <input type="checkbox"
+                   style="vertical-align:middle"
+                   class="form-check-input"
+                   @bind-value="TodoItem.IsCompleted"
+                   checked="@TodoItem.IsCompleted" />
+        </div>
+        <div class="col">
+            @if (TodoItem.IsCompleted)
+            {
+                <input type="text"
+                       style="vertical-align:middle"
+                       class="form-control border-0 text-decoration-line-through"
+                       @bind-value="TodoItem.Description"
+                       disabled />
+            }
+            else
+            {
+                <input type="text"
+                       style="vertical-align:middle"
+                       class="form-control border-0"
+                       @bind-value="TodoItem.Description" />
+            }
+
+        </div>
+        <div class="col">
+            @if (TodoItem.IsCompleted)
+            {
+                <text>Completed at: @TodoItem.CompletionDate</text>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public TodoTask? TodoItem { get; set; }
+}

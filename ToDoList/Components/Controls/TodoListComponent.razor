@@ -1,0 +1,16 @@
+﻿@if (Todos is not null && Todos.Count > 0)
+{
+    <ul class="list-unstyled">
+        @foreach (TodoTask todo in Todos)
+        {
+            <li @key="todo.Id">
+                <TodoItemComponent TodoItem="@todo" />
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public List<TodoTask>? Todos { get; set; }
+}
