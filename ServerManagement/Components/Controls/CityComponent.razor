@@ -1,4 +1,6 @@
-﻿@if (CityName is not null)
+﻿@implements IDisposable
+
+@if (CityName is not null)
 {
     <div class="col">
         <div class="card @(CityName.Equals(SelectedCityName, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
@@ -24,4 +26,52 @@
     {
         SelectCityCallback.InvokeAsync(cityName);
     }
+
+    public CityComponent()
+    {
+        Console.WriteLine("City: Constructor");
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("City: OnInitialized");
+
+        base.OnInitialized();
+    }
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("City: ShouldRender");
+
+        return base.ShouldRender();
+
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("City: SetParametersAsync");
+
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("City: OnParametersSet");
+
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("City: OnAfterRender");
+
+        base.OnAfterRender(firstRender);
+    }
+
+    public void Dispose()
+    {
+        Console.WriteLine("City: Dispose");
+
+    }
+}
 }
