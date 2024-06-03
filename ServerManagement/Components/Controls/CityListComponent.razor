@@ -7,7 +7,7 @@
             @foreach (var cityName in cities)
             {
                 <CityComponent CityName="@cityName"
-                               SelectedCityName="@selectedCityName"
+                               SelectedCityName="@SelectedCityName"
                                SelectCityCallback="HandleCitySelection" />
 
             }           
@@ -21,7 +21,8 @@
     [Parameter]
     public EventCallback<string> SelectCityCallback { get; set; }
 
-    private string selectedCityName = "Toronto";
+    [Parameter]
+    public string SelectedCityName { get; set; } = "Toronto";
 
     private List<String>? cities;
 
@@ -32,13 +33,13 @@
 
     private void HandleCitySelection(string cityName)
     {
-        selectedCityName = cityName;
+        SelectedCityName = cityName;
 
         SelectCityCallback.InvokeAsync(cityName);
     }
 
     public void ClearSelection()
     {
-        selectedCityName = string.Empty;
+        SelectedCityName = string.Empty;
     }
 }

@@ -1,6 +1,11 @@
 ﻿@page "/servers/{id:int}"
 
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<NavigationLock 
+    OnBeforeInternalNavigation="OnBeforeInternalNavigation"
+    ConfirmExternalNavigation="true"/>
 
 <h3>Edit Server</h3>
 <br />
@@ -66,7 +71,17 @@
         {
             ServersRepository.UpdateServer(Server.ServerId, Server);
 
-            NavigationManager.NavigateTo("/servers");
+            NavigationManager.NavigateTo($"/servers/backfrom/{Server.City}");
+        }
+    }
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        var isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to leave this page?");
+
+        if(!isConfirmed)
+        {
+            context.PreventNavigation();
         }
     }
 }

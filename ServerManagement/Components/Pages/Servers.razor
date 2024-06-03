@@ -1,4 +1,5 @@
 ﻿@page "/servers"
+@page "/servers/backfrom/{CityName}"
 @rendermode InteractiveServer
 @inject IServersRepository ServersRepository
 @inject NavigationManager NavigationManager
@@ -8,6 +9,7 @@
 <CityListComponent 
     @ref="cityListComponent"
     @rendermode="InteractiveServer"
+    SelectedCityName="@selectedCity"
     SelectCityCallback="HandleCitySelection" />
 
 <br/>
@@ -28,8 +30,10 @@
 <a href="/servers/add" class="btn btn-primary">Add server</a>
 
 @code {
-    private string selectedCity = "Toronto";
+    [Parameter]
+    public string? CityName { get; set; }
 
+    private string selectedCity = "Toronto";
     private string serverFilter = string.Empty;
 
     CityListComponent? cityListComponent;
@@ -50,12 +54,12 @@
     public Servers()
     {
         Console.WriteLine("Servers: Constructor");
-        
+
     }
 
     protected override void OnInitialized()
     {
-        
+
         Console.WriteLine("Servers: OnInitialized");
 
         base.OnInitialized();
@@ -85,9 +89,15 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        Console.WriteLine("Servers: OnAfterRender");
+        if(firstRender)
+        {
+            if(NavigationManager.Uri.Contains("backfrom") && !string.IsNullOrWhiteSpace(CityName))
+            {
+                selectedCity = CityName;
 
-        base.OnAfterRender(firstRender);
+                StateHasChanged();
+            }
+        }
     }
 
     public void Dispose()
