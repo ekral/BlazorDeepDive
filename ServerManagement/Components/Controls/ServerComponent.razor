@@ -9,7 +9,7 @@
             @Server.Name in @Server.City is <span style="color: @(Server.IsOnline ? "green" : "red")">@(Server.IsOnline ? "online" : "offline")</span>
         </td>
         <td>
-            <a href="/servers/@Server.ServerId" class="btn btn-link">Edit</a>
+            <a href="/server/@Server.ServerId" class="btn btn-link">Edit</a>
         </td>
         <td>
             @if (Server.IsOnline)
