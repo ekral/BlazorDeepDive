@@ -1,7 +1,8 @@
 ﻿@page "/setcityname"
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@inject ProtectedSessionStorage SessionStorage
+
 @inject NavigationManager NavigationManager
+@inject IStorage Storage
+
 <h3>City Name</h3>
 
 @error
@@ -28,7 +29,7 @@
         }
         else
         {
-            await SessionStorage.SetAsync("server", server);
+            await Storage.SetServerAsync(server);
 
             NavigationManager.NavigateTo("/setservername");
         }

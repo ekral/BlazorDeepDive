@@ -1,8 +1,7 @@
 ﻿@page "/setstatus"
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@inject ProtectedSessionStorage SessionStorage
 @inject NavigationManager NavigationManager
 @inject IServersRepository ServersRepository
+@inject IStorage Storage
 
 <h3>Server Status</h3>
 
@@ -23,15 +22,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await SessionStorage.GetAsync<Server>("server");
+        Server? server = await Storage.GetServerAsync();
 
-        if (!result.Success || result.Value is null || string.IsNullOrWhiteSpace(result.Value.City) || string.IsNullOrWhiteSpace(result.Value.Name))
+        if (server is null || string.IsNullOrWhiteSpace(server.City) || string.IsNullOrWhiteSpace(server.Name))
         {
             error = "Can not load server";
             return;
         }
 
-        server = result.Value;
+        this.server = server;
     }
 
     private void Save()

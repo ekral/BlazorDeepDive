@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using ServerManagement.Components;
+using ServerManagement.StateStorage;
 
 namespace ServerManagement
 {
@@ -16,7 +17,8 @@ namespace ServerManagement
             builder.Services
                 .AddSingleton<IServersRepository, ServersRepository>()
                 .AddSingleton<ICitiesRepository, CitiesRepository>()
-                .AddTransient<ProtectedSessionStorage>();
+                .AddTransient<ProtectedSessionStorage>()
+                .AddSingleton<IStorage, ContainerStorage>();
 
             var app = builder.Build();
 
