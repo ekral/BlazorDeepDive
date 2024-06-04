@@ -1,0 +1,48 @@
+﻿@page "/setservername"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage SessionStorage
+@inject NavigationManager NavigationManager
+
+<h3>City Name</h3>
+
+@error
+<br />
+
+<FieldComponent Label="Server Name">
+    <Control>
+        <input type="text" @bind-value="server.Name" class="form-control" />
+    </Control>
+</FieldComponent>
+
+<br />
+<button type="button" class="btn btn-primary" @onclick="GoNextAsync">Next</button>
+@code {
+    private Server server = new Server() { Name = string.Empty, City = string.Empty };
+    private string error = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await SessionStorage.GetAsync<Server>("server");
+
+        if (!result.Success || result.Value is null || string.IsNullOrWhiteSpace(result.Value.City))
+        {
+            error = "Can not load server";
+            return;
+        }
+
+        server = result.Value;
+    }
+
+    private async Task GoNextAsync()
+    {
+        if (string.IsNullOrWhiteSpace(server.Name))
+        {
+            error = "City or Name can not be empty";
+            return;
+        }
+       
+        await SessionStorage.SetAsync("server", server);
+
+        NavigationManager.NavigateTo("/setstatus");
+    }
+}

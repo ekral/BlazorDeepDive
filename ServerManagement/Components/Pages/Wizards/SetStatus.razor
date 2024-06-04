@@ -1,0 +1,43 @@
+﻿@page "/setstatus"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage SessionStorage
+@inject NavigationManager NavigationManager
+@inject IServersRepository ServersRepository
+
+<h3>Server Status</h3>
+
+@error
+<br />
+
+<FieldComponent Label="Is Online">
+    <Control>
+        <input type="checkbox" @bind-value="server.IsOnline" class="form-check-input" />
+    </Control>
+</FieldComponent>
+
+<br />
+<button type="button" class="btn btn-primary" @onclick="Save">Submit</button>
+@code {
+    private Server server = new Server() { Name = string.Empty, City = string.Empty };
+    private string error = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await SessionStorage.GetAsync<Server>("server");
+
+        if (!result.Success || result.Value is null || string.IsNullOrWhiteSpace(result.Value.City) || string.IsNullOrWhiteSpace(result.Value.Name))
+        {
+            error = "Can not load server";
+            return;
+        }
+
+        server = result.Value;
+    }
+
+    private void Save()
+    {
+        ServersRepository.AddServer(server);
+
+        NavigationManager.NavigateTo($"/servers/backfrom/{server.City}");
+    }
+}
