@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-
+@inject IMessenger Messenger
 @if (CityName is not null)
 {
     <div class="col">
@@ -7,6 +7,11 @@
             <img src=@($"/images/{CityName}.png") class="card-img-top" alt="Calgary">
             <div class="card-body">
                 <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(CityName))"> @CityName</button>
+                <br/>
+                @if(isOnline)
+                {
+                    <text>@numberOfPeople</text>
+                }
             </div>
         </div>
     </div>
@@ -21,7 +26,10 @@
 
     [Parameter]
     public EventCallback<string> SelectCityCallback { get; set; }
-    
+
+    private int numberOfPeople = 0;
+    private bool isOnline;
+
     private void SelectCity(string cityName)
     {
         SelectCityCallback.InvokeAsync(cityName);
@@ -29,6 +37,17 @@
 
     public CityComponent()
     {
+        WeakReferenceMessenger.Default.Register<PeopleOnlineMessage>(this, (r, m) =>
+        {
+            if(m.CityName.Equals(CityName, StringComparison.OrdinalIgnoreCase))
+            {
+                numberOfPeople = m.NumberOfPeople;
+                isOnline = m.IsOnline;
+
+                StateHasChanged();
+            }
+        });
+
         Console.WriteLine("City: Constructor");
     }
 

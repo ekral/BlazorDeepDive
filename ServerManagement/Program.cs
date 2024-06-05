@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using ServerManagement.Components;
 using ServerManagement.StateStorage;
@@ -18,7 +19,8 @@ namespace ServerManagement
                 .AddSingleton<IServersRepository, ServersRepository>()
                 .AddSingleton<ICitiesRepository, CitiesRepository>()
                 .AddTransient<ProtectedSessionStorage>()
-                .AddSingleton<IStorage, ContainerStorage>();
+                .AddScoped<IStorage, ContainerStorage>()
+                .AddScoped<IMessenger, WeakReferenceMessenger>();
 
             var app = builder.Build();
 

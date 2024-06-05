@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IServersRepository ServersRepository
+@inject IMessenger Messenger
 
 @if(Server is not null)
 {
@@ -16,14 +17,14 @@
             {
                 <button
                     class="btn btn-outline-danger"
-                    @onclick="@(() => Server.IsOnline = false)">
+                        @onclick="@(() => SetServerStatus(false))">
                         Turn Off
                     </button>
             }
             else
             {
                 <button class="btn btn-outline-success"
-                        @onclick="@(() => Server.IsOnline = true)">
+                        @onclick="@(() => SetServerStatus(true))">
                     Turn On
                 </button>
             }
@@ -56,5 +57,24 @@
         ServersRepository.DeleteServer(serverId);
 
         NavigationManager.NavigateTo("/servers", true);
+    }
+
+    private void SetServerStatus(bool status)
+    {
+        if(Server is null)
+        {
+            return;
+        }
+
+        if (Server.IsOnline == status)
+        {
+            return;
+        }
+
+        Server.IsOnline = status;
+
+        PeopleOnlineMessage message = new PeopleOnlineMessage(Server.City, Server.NumberOfPeople, Server.IsOnline);
+        WeakReferenceMessenger.Default.Send<PeopleOnlineMessage>(message);
+        
     }
 }
