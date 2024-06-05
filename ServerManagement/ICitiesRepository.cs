@@ -1,8 +1,10 @@
 ﻿
+using ServerManagement.Models;
+
 namespace ServerManagement
 {
     public interface ICitiesRepository
     {
-        List<string> GetCities();
+        List<City> GetCities();
     }
 }

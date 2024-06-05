@@ -4,9 +4,9 @@
 {
     <div class="container-fluid text-center">
         <div class="row w-50">
-            @foreach (var cityName in cities)
+            @foreach (var city in cities)
             {
-                <CityComponent CityName="@cityName"
+                <CityComponent City="@city"
                                SelectedCityName="@SelectedCityName"
                                SelectCityCallback="HandleCitySelection" />
 
@@ -24,7 +24,7 @@
     [Parameter]
     public string SelectedCityName { get; set; } = "Toronto";
 
-    private List<String>? cities;
+    private List<City>? cities;
 
     protected override void OnInitialized()
     {

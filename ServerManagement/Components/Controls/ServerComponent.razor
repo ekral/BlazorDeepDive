@@ -73,8 +73,14 @@
 
         Server.IsOnline = status;
 
-        PeopleOnlineMessage message = new PeopleOnlineMessage(Server.City, Server.NumberOfPeople, Server.IsOnline);
-        WeakReferenceMessenger.Default.Send<PeopleOnlineMessage>(message);
-        
+        if (status)
+        {
+            WeakReferenceMessenger.Default.Send<ChangeMessage>(new ChangeMessage(Server.City, 1));
+        }
+        else
+        {
+            WeakReferenceMessenger.Default.Send<ChangeMessage>(new ChangeMessage(Server.City, -1));
+        }
+
     }
 }

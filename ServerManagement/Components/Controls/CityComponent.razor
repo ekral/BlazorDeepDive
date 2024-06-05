@@ -1,17 +1,14 @@
 ﻿@implements IDisposable
 @inject IMessenger Messenger
-@if (CityName is not null)
+@if (City is not null)
 {
     <div class="col">
-        <div class="card @(CityName.Equals(SelectedCityName, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
-            <img src=@($"/images/{CityName}.png") class="card-img-top" alt="Calgary">
+        <div class="card @(City.Name.Equals(SelectedCityName, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
+            <img src=@($"/images/{City.Name}.png") class="card-img-top" alt="Calgary">
             <div class="card-body">
-                <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(CityName))"> @CityName</button>
+                <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(City.Name))"> @City.Name</button>
                 <br/>
-                @if(isOnline)
-                {
-                    <text>@numberOfPeople</text>
-                }
+                <text>@City.NumberOfServers</text>
             </div>
         </div>
     </div>
@@ -19,16 +16,13 @@
 
 @code {
     [Parameter]
-    public string? CityName { get; set; } 
+    public City? City { get; set; } 
 
     [Parameter]
     public string SelectedCityName { get; set; } = "Toronto";
 
     [Parameter]
     public EventCallback<string> SelectCityCallback { get; set; }
-
-    private int numberOfPeople = 0;
-    private bool isOnline;
 
     private void SelectCity(string cityName)
     {
@@ -37,16 +31,22 @@
 
     public CityComponent()
     {
-        WeakReferenceMessenger.Default.Register<PeopleOnlineMessage>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<ChangeMessage>(this, (r, m) =>
         {
-            if(m.CityName.Equals(CityName, StringComparison.OrdinalIgnoreCase))
+            if(City is null)
             {
-                numberOfPeople = m.NumberOfPeople;
-                isOnline = m.IsOnline;
+                return;
+            }
+
+            if (m.CityName.Equals(City.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                City.NumberOfServers += m.Change;
 
                 StateHasChanged();
             }
         });
+
+       
 
         Console.WriteLine("City: Constructor");
     }

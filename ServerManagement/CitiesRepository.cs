@@ -1,10 +1,19 @@
-﻿namespace ServerManagement
+﻿using ServerManagement.Models;
+
+namespace ServerManagement
 {
     public class CitiesRepository : ICitiesRepository
     {
-        private readonly List<string> cities = ["Toronto", "Montreal", "Ottawa", "Calgary", "Halifax"];
+        private readonly List<City> cities = 
+        [ 
+            new() { Name = "Toronto" }, 
+            new() { Name = "Montreal" },
+            new() { Name = "Ottawa" },
+            new() { Name = "Calgary" },
+            new() { Name = "Halifax" }
+        ];
 
-        public List<string> GetCities() => cities;
+        public List<City> GetCities() => cities;
     }
 
 }
