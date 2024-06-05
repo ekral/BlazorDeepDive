@@ -2,6 +2,7 @@
 @page "/servers/backfrom/{CityName}"
 @rendermode InteractiveServer
 @inject IServersRepository ServersRepository
+@inject ICitiesRepository CitiesRepository
 @inject NavigationManager NavigationManager
 @implements IDisposable
 
@@ -59,6 +60,10 @@
 
     protected override void OnInitialized()
     {
+        foreach (City city in CitiesRepository.GetCities())
+        {
+            city.NumberOfServers = ServersRepository.GetServersByCity(city.Name).Where(s => s.IsOnline).Count();
+        }
 
         Console.WriteLine("Servers: OnInitialized");
 

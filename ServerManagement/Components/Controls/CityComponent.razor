@@ -7,10 +7,13 @@
             <img src=@($"/images/{City.Name}.png") class="card-img-top" alt="Calgary">
             <div class="card-body">
                 <button type="button" class="btn btn-outline-primary" @onclick="@(() => SelectCity(City.Name))"> @City.Name</button>
-                <br/>
-                <text>@City.NumberOfServers</text>
+                <div>
+                    <text>@City.NumberOfServers</text>
+                </div>
             </div>
+
         </div>
+       
     </div>
 }
 
