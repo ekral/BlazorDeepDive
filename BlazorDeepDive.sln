@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HypoteniKalkulackaStaticSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList", "ToDoList\ToDoList.csproj", "{1AA3D30D-5B65-468B-BF04-8A9156042848}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAssemblyDemo", "WebAssemblyDemo\WebAssemblyDemo\WebAssemblyDemo.csproj", "{930F93AB-789B-4531-9049-A9A18933F54A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAssemblyDemo.Client", "WebAssemblyDemo\WebAssemblyDemo.Client\WebAssemblyDemo.Client.csproj", "{DAF35B10-9662-4F0F-9B38-82E51DB87C10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{1AA3D30D-5B65-468B-BF04-8A9156042848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA3D30D-5B65-468B-BF04-8A9156042848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA3D30D-5B65-468B-BF04-8A9156042848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{930F93AB-789B-4531-9049-A9A18933F54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{930F93AB-789B-4531-9049-A9A18933F54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{930F93AB-789B-4531-9049-A9A18933F54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{930F93AB-789B-4531-9049-A9A18933F54A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAF35B10-9662-4F0F-9B38-82E51DB87C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF35B10-9662-4F0F-9B38-82E51DB87C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAF35B10-9662-4F0F-9B38-82E51DB87C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF35B10-9662-4F0F-9B38-82E51DB87C10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
