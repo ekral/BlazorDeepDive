@@ -1,0 +1,22 @@
+﻿@page "/wasm2"
+@inject IJSRuntime JSRuntime
+@rendermode InteractiveWebAssembly
+
+<h3>BlazorStorageStep2</h3>
+<br/>
+<br/>
+<b>Demo Data</b> @data
+
+@code {
+    private string data = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            data = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "demodata");
+
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿@page "/wasm1"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@rendermode InteractiveWebAssembly
+
+<h3>BlazorStorageStep1</h3>
+<br/>
+<br/>
+<input type="text" class="form-control" @bind-value="data"/>
+<br />
+<br />
+<button type="button" class="btn btn-primary" @onclick="GoNext">Go next</button>
+@code {
+    private string data = string.Empty;
+
+    public async Task GoNext()
+    {
+        await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "demodata", data);
+        NavigationManager.NavigateTo("/wasm2");
+    }
+}
