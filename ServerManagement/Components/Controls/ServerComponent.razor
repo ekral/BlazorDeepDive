@@ -73,6 +73,8 @@
 
         Server.IsOnline = status;
 
+        ServersRepository.UpdateServer(Server.ServerId, Server);
+
         if (status)
         {
             WeakReferenceMessenger.Default.Send<ChangeMessage>(new ChangeMessage(Server.City, 1));
