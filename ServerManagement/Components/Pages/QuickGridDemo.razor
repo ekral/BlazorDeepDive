@@ -67,17 +67,17 @@
 
     private PaginationState paginationState = new PaginationState() { ItemsPerPage = 5 };
 
-    private void DeleteServer(int serverId)
+    private async void DeleteServer(int serverId)
     {
         ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(serverId, 0);
 
-        ServersRepository.DeleteServer(serverId);
+        await ServersRepository.DeleteServer(serverId);
 
-        servers = ServersRepository.GetServers();
+        servers = await ServersRepository.GetServers();
     }
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        servers = ServersRepository.GetServers();
+        servers = await ServersRepository.GetServers();
     }
 }

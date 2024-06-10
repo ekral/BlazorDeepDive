@@ -73,11 +73,11 @@ else
     [SupplyParameterFromForm]
     Server? Server { get; set; }
 
-    protected override void OnParametersSet()
+    protected override async void OnParametersSet()
     {
         if(Id.HasValue)
         {
-            Server ??= ServersRepository.GetServerById(Id.Value); 
+            Server ??= await ServersRepository.GetServerById(Id.Value); 
         }
         else
         {

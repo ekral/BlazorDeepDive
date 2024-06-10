@@ -60,11 +60,12 @@
 
     }
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         foreach (City city in CitiesRepository.GetCities())
         {
-            city.NumberOfServers = ServersRepository.GetServersByCity(city.Name).Where(s => s.IsOnline).Count();
+            List<Server> servers = await ServersRepository.GetServersByCity(city.Name);
+            city.NumberOfServers = servers.Where(s => s.IsOnline).Count();
         }
 
         Console.WriteLine("Servers: OnInitialized");

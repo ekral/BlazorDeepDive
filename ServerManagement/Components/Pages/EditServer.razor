@@ -60,16 +60,16 @@
     [SupplyParameterFromForm] 
     Server? Server { get; set; }
 
-    protected override void OnParametersSet()
+    protected override async void OnParametersSet()
     {
-        Server ??= ServersRepository.GetServerById(Id);
+        Server ??= await ServersRepository.GetServerById(Id);
     }
 
-    void Submit()
+    async void Submit()
     {
         if (Server is not null)
         {
-            ServersRepository.UpdateServer(Server.ServerId, Server);
+            await ServersRepository.UpdateServer(Server.ServerId, Server);
 
             NavigationManager.NavigateTo($"/servers/backfrom/{Server.City}");
         }

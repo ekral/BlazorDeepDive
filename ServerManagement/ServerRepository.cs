@@ -23,62 +23,70 @@ namespace ServerManagement
             new Server {  ServerId = 15, Name = "Server15", City = "Halifax" },
         ];
 
-        public void AddServer(Server server)
+        public Task AddServer(Server server)
         {
             var maxId = servers.Max(s => s.ServerId);
             server.ServerId = maxId + 1;
             servers.Add(server);
+
+            return Task.CompletedTask;
         }
 
-        public List<Server> GetServers() => servers;
+        public Task<List<Server>> GetServers() => Task.FromResult(servers);
 
-        public List<Server> GetServersByCity(string cityName)
+        public Task<List<Server>> GetServersByCity(string cityName)
         {
-            return servers.Where(s => s.City.Equals(cityName, StringComparison.OrdinalIgnoreCase)).ToList();
+            return Task.FromResult(servers.Where(s => s.City.Equals(cityName, StringComparison.OrdinalIgnoreCase)).ToList());
         }
 
-        public Server? GetServerById(int id)
+        public Task<Server?> GetServerById(int id)
         {
             var server = servers.FirstOrDefault(s => s.ServerId == id);
             if (server != null)
             {
-                return new Server
+                return Task.FromResult<Server?>(new Server
                 {
                     ServerId = server.ServerId,
                     Name = server.Name,
                     City = server.City,
                     IsOnline = server.IsOnline
-                };
+                });
             }
 
-            return null;
+            return Task.FromResult<Server?>(null);
         }
 
-        public void UpdateServer(int serverId, Server server)
+        public Task UpdateServer(int serverId, Server server)
         {
-            if (serverId != server.ServerId) return;
+            if (serverId != server.ServerId) return Task.CompletedTask;
 
             var serverToUpdate = servers.FirstOrDefault(s => s.ServerId == serverId);
+
             if (serverToUpdate != null)
             {
                 serverToUpdate.IsOnline = server.IsOnline;
                 serverToUpdate.Name = server.Name;
                 serverToUpdate.City = server.City;
             }
+
+            return Task.CompletedTask;
         }
 
-        public void DeleteServer(int serverId)
+        public Task DeleteServer(int serverId)
         {
             var server = servers.FirstOrDefault(s => s.ServerId == serverId);
+
             if (server != null)
             {
                 servers.Remove(server);
             }
+
+            return Task.CompletedTask;
         }
 
-        public List<Server> SearchServers(string serverFilter)
+        public Task<List<Server>> SearchServers(string serverFilter)
         {
-            return servers.Where(s => s.Name.Contains(serverFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+            return Task.FromResult(servers.Where(s => s.Name.Contains(serverFilter, StringComparison.OrdinalIgnoreCase)).ToList());
         }
     }
 }

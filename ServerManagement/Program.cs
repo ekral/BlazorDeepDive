@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Microsoft.EntityFrameworkCore;
 using ServerManagement.Components;
+using ServerManagement.Data;
 using ServerManagement.StateStorage;
 
 namespace ServerManagement
@@ -10,6 +12,12 @@ namespace ServerManagement
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContextFactory<ServerManagementContext>(options =>
+            {
+                string? connectionString = builder.Configuration.GetConnectionString("ServerManagement");
+                options.UseSqlServer(connectionString);
+            });
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

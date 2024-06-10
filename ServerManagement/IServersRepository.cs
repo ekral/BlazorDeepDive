@@ -4,12 +4,12 @@ namespace ServerManagement
 {
     public interface IServersRepository
     {
-        void AddServer(Server server);
-        void DeleteServer(int serverId);
-        Server? GetServerById(int id);
-        List<Server> GetServersByCity(string cityName);
-        List<Server> GetServers();
-        List<Server> SearchServers(string serverFilter);
-        void UpdateServer(int serverId, Server server);
+        Task AddServer(Server server);
+        Task DeleteServer(int serverId);
+        Task<Server?> GetServerById(int id);
+        Task<List<Server>> GetServersByCity(string cityName);
+        Task<List<Server>> GetServers();
+        Task<List<Server>> SearchServers(string serverFilter);
+        Task UpdateServer(int serverId, Server server);
     }
 }
