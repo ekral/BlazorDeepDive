@@ -24,7 +24,7 @@ namespace ServerManagement
                     .AddInteractiveServerComponents();
 
             builder.Services
-                .AddSingleton<IServersRepository, ServersRepository>()
+                .AddSingleton<IServersRepository, ServersEFCoreRepository>()
                 .AddSingleton<ICitiesRepository, CitiesRepository>()
                 .AddTransient<ProtectedSessionStorage>()
                 .AddScoped<IStorage, ContainerStorage>()
