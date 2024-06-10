@@ -1,5 +1,6 @@
 ﻿@page "/wasm2"
 @inject IJSRuntime JSRuntime
+@inject ContainerStorage ContainerStorage
 @rendermode InteractiveWebAssembly
 
 <h3>BlazorStorageStep2</h3>
@@ -14,7 +15,9 @@
     {
         if (firstRender)
         {
-            data = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "demodata");
+            //data = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "demodata");
+
+            data = ContainerStorage.GetMessage();
 
             StateHasChanged();
         }

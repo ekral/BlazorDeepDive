@@ -34,7 +34,7 @@
 
     public CityComponent()
     {
-        WeakReferenceMessenger.Default.Register<ChangeMessage>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<ChangeMessage>(this, async (r, m) =>
         {
             if(City is null)
             {
@@ -45,7 +45,7 @@
             {
                 City.NumberOfServers += m.Change;
 
-                StateHasChanged();
+                await base.InvokeAsync(StateHasChanged);
             }
         });
 

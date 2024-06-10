@@ -1,3 +1,4 @@
+using WebAssemblyDemo.Client;
 using WebAssemblyDemo.Client.Pages;
 using WebAssemblyDemo.Components;
 
@@ -10,7 +11,9 @@ namespace WebAssemblyDemo
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddRazorComponents()
+            builder.Services
+                .AddSingleton<ContainerStorage>()
+                .AddRazorComponents()
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
 

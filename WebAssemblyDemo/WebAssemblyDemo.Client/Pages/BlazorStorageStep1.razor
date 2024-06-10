@@ -1,6 +1,8 @@
 ﻿@page "/wasm1"
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
+@inject ContainerStorage ContainerStorage
+
 @rendermode InteractiveWebAssembly
 
 <h3>BlazorStorageStep1</h3>
@@ -15,7 +17,10 @@
 
     public async Task GoNext()
     {
-        await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "demodata", data);
+        //await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "demodata", data);
+
+        ContainerStorage.SetMessage(data);
+
         NavigationManager.NavigateTo("/wasm2");
     }
 }
