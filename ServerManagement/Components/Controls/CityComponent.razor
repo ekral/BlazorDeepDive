@@ -34,22 +34,9 @@
 
     public CityComponent()
     {
-        WeakReferenceMessenger.Default.Register<ChangeMessage>(this, async (r, m) =>
-        {
-            if(City is null)
-            {
-                return;
-            }
 
-            if (m.CityName.Equals(City.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                City.NumberOfServers += m.Change;
 
-                await base.InvokeAsync(StateHasChanged);
-            }
-        });
 
-       
 
         Console.WriteLine("City: Constructor");
     }
@@ -85,6 +72,24 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
+        if (firstRender)
+        {
+            WeakReferenceMessenger.Default.Register<ChangeMessage>(this, async (r, m) =>
+            {
+                if (City is null)
+                {
+                    return;
+                }
+
+                if (m.CityName.Equals(City.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    City.NumberOfServers += m.Change;
+
+                    await base.InvokeAsync(StateHasChanged);
+                }
+            });
+        }
+
         Console.WriteLine("City: OnAfterRender");
 
         base.OnAfterRender(firstRender);
