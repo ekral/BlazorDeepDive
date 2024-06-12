@@ -12,7 +12,7 @@ namespace WebAssemblyDemo.Client
             builder
                 .Services
                 .AddSingleton<ContainerStorage>()
-                .AddScoped(sp =>
+                .AddSingleton(sp =>
                 {
                     HttpClient client = new() { BaseAddress = new Uri("https://webassembly-demo-aa095-default-rtdb.europe-west1.firebasedatabase.app") };
                     
@@ -20,7 +20,7 @@ namespace WebAssemblyDemo.Client
 
                     return client;
                 })
-                .AddScoped<IServersRepository, ServersApiRepository>();
+                .AddSingleton<IServersRepository, ServersApiRepository>();
 
             await builder.Build().RunAsync();
         }
