@@ -5,6 +5,7 @@
 
 @inject NavigationManager NavigationManager
 @inject IServersRepository ServersRepository
+@inject HttpClient Client
 
 <h3>Edit Server</h3>
 <br/>
@@ -68,6 +69,7 @@
 
     protected override async void OnParametersSet()
     {
+        Console.WriteLine(Client.BaseAddress);
         server ??= await ServersRepository.GetServerByIdAsync(this.Id);
     }
 
