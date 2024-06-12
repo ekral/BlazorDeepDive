@@ -4,6 +4,7 @@
 @rendermode InteractiveWebAssembly
 
 @inject NavigationManager NavigationManager
+@inject IServersRepository ServersRepository
 
 <h3>Servers</h3>
 <br />
@@ -50,18 +51,18 @@
 @code {
     public List<Server> listServers { get; set; } = new List<Server>();
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            listServers = ServersRepository.GetServers();
+            listServers = await ServersRepository.GetServersAsync();
             StateHasChanged();
         }
     }
 
-    private void Delete(int serverId)
+    private async void Delete(int serverId)
     {
-        ServersRepository.DeleteServer(serverId);
-        listServers = ServersRepository.GetServers();
+        //ServersRepository.DeleteServer(serverId);
+        listServers = await ServersRepository.GetServersAsync();
     }
 }         

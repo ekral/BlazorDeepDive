@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using WebAssemblyDemo.Client.Models;
 
 namespace WebAssemblyDemo.Client
 {
@@ -8,7 +9,18 @@ namespace WebAssemblyDemo.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            builder.Services.AddSingleton<ContainerStorage>();
+            builder
+                .Services
+                .AddSingleton<ContainerStorage>()
+                .AddScoped(sp =>
+                {
+                    HttpClient client = new() { BaseAddress = new Uri("https://webassembly-demo-aa095-default-rtdb.europe-west1.firebasedatabase.app") };
+                    
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                    return client;
+                })
+                .AddScoped<IServersRepository, ServersApiRepository>();
 
             await builder.Build().RunAsync();
         }
