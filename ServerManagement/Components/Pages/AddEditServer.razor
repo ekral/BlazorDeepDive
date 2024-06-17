@@ -1,6 +1,9 @@
 ﻿@page "/server/{Id:int?}"
+@using Microsoft.AspNetCore.Authorization
 @inject IServersRepository ServersRepository
 @inject NavigationManager NavigationManager
+
+@attribute [Authorize]
 
 @if(Id.HasValue)
 {

@@ -7,15 +7,17 @@ namespace WebAssemblyDemo.Client.Models
 {
     public class ServersApiRepository : IServersRepository
     {
-        private readonly HttpClient client;
+        private readonly IHttpClientFactory factory;
 
-        public ServersApiRepository(HttpClient client)
+        public ServersApiRepository(IHttpClientFactory factory)
         {
-            this.client = client;
+            this.factory = factory;
         }
 
         public async Task<List<Server>> GetServersAsync()
         {
+            var client = factory.CreateClient();
+
             HttpResponseMessage response = await client.GetAsync("servers.json");
 
             if (response.IsSuccessStatusCode)
@@ -33,6 +35,8 @@ namespace WebAssemblyDemo.Client.Models
 
         public async Task<Server> GetServerByIdAsync(int serverId)
         {
+            var client = factory.CreateClient();
+
             HttpResponseMessage response = await client.GetAsync($"servers/{serverId}.json");
 
             if (response.IsSuccessStatusCode)
@@ -50,6 +54,8 @@ namespace WebAssemblyDemo.Client.Models
 
         public async Task AddServerAsync(Server server)
         {
+            var client = factory.CreateClient();
+
             List<Server> servers = await GetServersAsync();
             server.ServerId = servers.Where(server => server is not null).Max(server => server.ServerId) + 1;
             
@@ -62,7 +68,9 @@ namespace WebAssemblyDemo.Client.Models
 
         public async Task UpdateServerAsync(int serverId, Server server)
         {
-            if(serverId != server.ServerId)
+            var client = factory.CreateClient();
+
+            if (serverId != server.ServerId)
             {
                 return;
             }
@@ -76,6 +84,8 @@ namespace WebAssemblyDemo.Client.Models
 
         public async Task DeleteServerAsync(int serverId)
         {
+            var client = factory.CreateClient();
+
             HttpResponseMessage response = await client.DeleteAsync($"servers/{serverId}.json");
         }
     }
